@@ -10,6 +10,9 @@ echo "Starting customizer"
 # Date and time
 date
 
+# git error handling
+git config --global user.email "root@emonpi.local"
+
 # Install Homemenu module
 echo "Install Homemenu module"
 mkdir /home/pi/Modules
@@ -21,25 +24,32 @@ ln -s /home/pi/Modules/home /var/www/emoncms/Modules/home
 
 echo "Change GIT URLs"
 echo "emonpi"
-cd /home/pi/emonpi
-git remote set-url origin https://github.com/rexometer/emonpi.git
-sudo git pull
+cd /home/pi/
+sudo rm -R emonpi/
+git clone origin https://github.com/rexometer/emonpi.git
 
 echo "emonhub"
-cd /home/pi/emonhub
-git remote set-url origin https://github.com/rexometer/emonhub.git
-sudo git pull
+cd /home/pi/
+sudo rm -R emonhub/
+git clone https://github.com/rexometer/emonhub.git
 
 echo "RFM2PI"
-cd /home/pi/RFM2Pi
-git remote set-url origin https://github.com/rexometer/RFM2Pi.git
-sudo git pull
+cd /home/pi/
+sudo rm -R RFM2Pi
+git clone https://github.com/rexometer/RFM2Pi.git
 
 echo "app"
-cd /var/www/emoncms/Modules/app
-git remote set-url origin https://github.com/rexometer/app.git
-sudo git pull
+cd /var/www/emoncms/Modules/
+sudo rm -R app
+git git clone https://github.com/rexometer/app.git
 
+echo "emoncms"
+cd /var/www/emoncms
+git remote set-url origin https://github.com/rexometer/emoncms.git
+git pull
+
+echo "change Theme"
+sed -i -e 's/theme = "basic"/theme = "rexometer"/g' /var/www/emoncms/settings.php
 
 $DB_USER = emoncms
 $DB_PASSWD = emonpiemoncmsmysql2016
@@ -50,4 +60,6 @@ mysql --user=$DB_USER --password=$DB_PASSWD $DB_NAME < dashboard.txt
 echo "Insert Standard Input"
 mysql --user=$DB_USER --password=$DB_PASSWD $DB_NAME < input.txt
 echo "Insert Standard Feeds"
-mysql --user=$DB_USER --password=$DB_PASSWD $DB_NAME < feed.txt
+mysql --user=$DB_USER --password=$DB_PASSWD $DB_NAME < feeds.txt
+echo "Insert Graph"
+mysql --user=$DB_USER --password=$DB_PASSWD $DB_NAME < graph.txt
