@@ -67,5 +67,9 @@ mysql --user=$DB_USER --password=$DB_PASSWD $DB_NAME < $parent_path/feeds.txt
 echo "Insert Graph"
 mysql --user=$DB_USER --password=$DB_PASSWD $DB_NAME < $parent_path/graph.txt
 
+#change hostname if branding is desired
+sudo sed -i -e 's/emonpi/rexometer/g' /etc/hosts
+sudo sed -i -e 's/emonpi/rexometer/g' /etc/hostname
+
 #remove updatelog
 sudo rm /home/pi/data/emonpiupdate.log
