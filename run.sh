@@ -59,6 +59,9 @@ git config --local user.name "emonpi"
 git remote set-url origin https://github.com/rexometer/emoncms.git
 git pull
 
+echo "copy new settigs"
+sudo cp default.emonpi.settings.php settings.php
+
 #echo "change Theme"
 #sed -i -e 's/theme = "basic"/theme = "rexometer"/g' /var/www/emoncms/settings.php
 
