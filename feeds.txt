@@ -1,0 +1,13 @@
+INSERT INTO `feeds` (`id`, `name`, `userid`, `tag`, `time`, `value`, `datatype`, `public`, `size`, `engine`, `processList`) VALUES
+(1, 'node:3phase:powerL1', 1, 'Node 3phase', NULL, NULL, 1, 0, NULL, 5, NULL),
+(2, 'node:3phase:powerL2', 1, 'Node 3phase', NULL, NULL, 1, 0, NULL, 5, NULL),
+(3, 'node:3phase:powerL3', 1, 'Node 3phase', NULL, NULL, 1, 0, NULL, 5, NULL),
+(4, 'node:3phase:power4', 1, 'Node 3phase', NULL, NULL, 1, 0, NULL, 5, NULL),
+(5, 'node:3phase:powerL1L2L3', 1, 'Node 3phase', NULL, NULL, 1, 0, NULL, 5, NULL),
+(6, 'node:3phase:energyL1L2L3', 1, 'Node 3phase', NULL, NULL, 1, 0, NULL, 5, NULL),
+(8, 'node:3phase:Vrms', 1, 'Node 3phase', NULL, NULL, 1, 0, NULL, 5, NULL),
+(9, 'node:emonth5:temperature', 1, 'Node emonth5', NULL, NULL, 1, 0, NULL, 5, NULL),
+(10, 'node:emonth5:humidity', 1, 'Node emonth5', NULL, NULL, 1, 0, NULL, 5, NULL),
+(11, 'node:emonth5:battery', 1, 'Node emonth5', NULL, NULL, 1, 0, NULL, 5, NULL),
+(12, 'node:emonth5:pulse', 1, 'Node emonth5', NULL, NULL, 1, 0, NULL, 5, NULL),
+(13, 'node:emonth5:pulsecount', 1, 'Node emonth5', NULL, NULL, 1, 0, NULL, 5, NULL);
