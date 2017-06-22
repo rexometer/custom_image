@@ -35,6 +35,11 @@ cd /home/pi/
 sudo rm -R emonhub/
 git clone https://github.com/rexometer/emonhub.git
 
+# Copy Standard-Template
+sudo rm /home/pi/data/emonhub.conf
+sudo cp /home/pi/emonhub/conf/emonpi.default.emonhub.conf /home/pi/data/emonhub.conf
+sudo chown pi:www-data /home/pi/data/emonhub.conf
+
 echo "RFM2PI"
 cd /home/pi/
 sudo rm -R RFM2Pi
@@ -54,8 +59,8 @@ git config --local user.name "emonpi"
 git remote set-url origin https://github.com/rexometer/emoncms.git
 git pull
 
-echo "change Theme"
-sed -i -e 's/theme = "basic"/theme = "rexometer"/g' /var/www/emoncms/settings.php
+#echo "change Theme"
+#sed -i -e 's/theme = "basic"/theme = "rexometer"/g' /var/www/emoncms/settings.php
 
 echo "move Standard feed files to correct location"
 cd $parent_path/feeds/phpfina
@@ -76,6 +81,9 @@ echo "Insert Graph"
 mysql --user=$DB_USER --password=$DB_PASSWD $DB_NAME < $parent_path/graph.txt
 echo "Insert app-config"
 mysql --user=$DB_USER --password=$DB_PASSWD $DB_NAME < $parent_path/app_config.txt
+
+echo "Update Emoncms database"
+php /home/pi/emonpi/emoncmsdbupdate.php
 
 #change hostname if branding is desired
 sudo sed -i -e 's/emonpi/rexometer/g' /etc/hosts
