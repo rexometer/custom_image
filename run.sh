@@ -10,6 +10,9 @@ echo "Starting customizer"
 # Date and time
 date
 
+#Path
+parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+
 # git error handling
 git config --global user.email "root@emonpi.local"
 
@@ -26,7 +29,7 @@ echo "Change GIT URLs"
 echo "emonpi"
 cd /home/pi/
 sudo rm -R emonpi/
-git clone origin https://github.com/rexometer/emonpi.git
+git clone https://github.com/rexometer/emonpi.git
 
 echo "emonhub"
 cd /home/pi/
@@ -41,7 +44,7 @@ git clone https://github.com/rexometer/RFM2Pi.git
 echo "app"
 cd /var/www/emoncms/Modules/
 sudo rm -R app
-git git clone https://github.com/rexometer/app.git
+git clone https://github.com/rexometer/app.git
 
 echo "emoncms"
 cd /var/www/emoncms
@@ -51,15 +54,18 @@ git pull
 echo "change Theme"
 sed -i -e 's/theme = "basic"/theme = "rexometer"/g' /var/www/emoncms/settings.php
 
-$DB_USER = emoncms
-$DB_PASSWD = emonpiemoncmsmysql2016
-$DB_NAME = emoncms
+DB_USER="emoncms"
+DB_PASSWD="emonpiemoncmsmysql2016"
+DB_NAME="emoncms"
 
 echo "Insert Standard Dashboard"
-mysql --user=$DB_USER --password=$DB_PASSWD $DB_NAME < dashboard.txt
+mysql --user=$DB_USER --password=$DB_PASSWD $DB_NAME < $parent_path/dashboard.txt
 echo "Insert Standard Input"
-mysql --user=$DB_USER --password=$DB_PASSWD $DB_NAME < input.txt
+mysql --user=$DB_USER --password=$DB_PASSWD $DB_NAME < $parent_path/input.txt
 echo "Insert Standard Feeds"
-mysql --user=$DB_USER --password=$DB_PASSWD $DB_NAME < feeds.txt
+mysql --user=$DB_USER --password=$DB_PASSWD $DB_NAME < $parent_path/feeds.txt
 echo "Insert Graph"
-mysql --user=$DB_USER --password=$DB_PASSWD $DB_NAME < graph.txt
+mysql --user=$DB_USER --password=$DB_PASSWD $DB_NAME < $parent_path/graph.txt
+
+#remove updatelog
+sudo rm /home/pi/data/emonpiupdate.log
