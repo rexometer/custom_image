@@ -1,3 +1,4 @@
+DELETE FROM input WHERE userid = '1';
 INSERT INTO `input` (`id`, `userid`, `name`, `description`, `nodeid`, `processList`, `time`, `value`) VALUES
 (1, 1, 'powerL1', '', '3phase', '1:1', NULL, NULL),
 (2, 1, 'powerL2', '', '3phase', '1:2', NULL, NULL),
