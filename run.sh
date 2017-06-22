@@ -13,8 +13,7 @@ date
 #Path
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
-# git error handling
-git config --global user.email "root@emonpi.local"
+
 
 # Install Homemenu module
 echo "Install Homemenu module"
@@ -47,12 +46,21 @@ sudo rm -R app
 git clone https://github.com/rexometer/app.git
 
 echo "emoncms"
+
 cd /var/www/emoncms
+# git error handling
+git config --local user.email "root@emonpi.local"
+git config --local user.name "emonpi"
 git remote set-url origin https://github.com/rexometer/emoncms.git
 git pull
 
 echo "change Theme"
 sed -i -e 's/theme = "basic"/theme = "rexometer"/g' /var/www/emoncms/settings.php
+
+echo "move Standard feed files to correct location"
+cd $parent_path/feeds/phpfina
+sudo cp * /home/pi/data/phpfina/
+sudo chown -R www-data:www-data /home/pi/data/phpfina/
 
 DB_USER="emoncms"
 DB_PASSWD="emonpiemoncmsmysql2016"
@@ -66,6 +74,8 @@ echo "Insert Standard Feeds"
 mysql --user=$DB_USER --password=$DB_PASSWD $DB_NAME < $parent_path/feeds.txt
 echo "Insert Graph"
 mysql --user=$DB_USER --password=$DB_PASSWD $DB_NAME < $parent_path/graph.txt
+echo "Insert app-config"
+mysql --user=$DB_USER --password=$DB_PASSWD $DB_NAME < $parent_path/app_config.txt
 
 #change hostname if branding is desired
 sudo sed -i -e 's/emonpi/rexometer/g' /etc/hosts
