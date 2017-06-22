@@ -13,7 +13,8 @@ date
 #Path
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
-
+echo "Stop emonhub"
+sudo /etc/init.d/emonhub stop
 
 # Install Homemenu module
 echo "Install Homemenu module"
@@ -87,6 +88,9 @@ mysql --user=$DB_USER --password=$DB_PASSWD $DB_NAME < $parent_path/app_config.t
 
 echo "Update Emoncms database"
 php /home/pi/emonpi/emoncmsdbupdate.php
+
+echo "Start emonhub"
+sudo /etc/init.d/emonhub start
 
 #change hostname if branding is desired
 sudo sed -i -e 's/emonpi/rexometer/g' /etc/hosts
