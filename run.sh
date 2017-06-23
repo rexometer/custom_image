@@ -40,6 +40,7 @@ git clone https://github.com/rexometer/emonhub.git
 sudo rm /home/pi/data/emonhub.conf
 sudo cp /home/pi/emonhub/conf/emonpi.default.emonhub.conf /home/pi/data/emonhub.conf
 sudo chown pi:www-data /home/pi/data/emonhub.conf
+sudo chmod ugo+w /home/pi/data/emonhub.conf
 
 echo "RFM2PI"
 cd /home/pi/
