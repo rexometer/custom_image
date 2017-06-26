@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# just for formating (bold/normal)
+bold=$(tput bold) #for formating (make text bold)
+normal=$(tput sgr0)
+
 # Make FS RW
 rpi-rw
 
@@ -41,6 +45,12 @@ sudo rm /home/pi/data/emonhub.conf
 sudo cp /home/pi/emonhub/conf/emonpi.default.emonhub.conf /home/pi/data/emonhub.conf
 sudo chown pi:www-data /home/pi/data/emonhub.conf
 sudo chmod ugo+w /home/pi/data/emonhub.conf
+
+# Add APIKEY of emoncms remote server
+echo "${bold}Optional: Enter emoncms API-Key for sending to remote server${normal}"
+read APIKEY
+sed -i -e "s/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx/$APIKEY/g" /home/pi/data/emonhub.conf
+sed -i -e 's/emoncms.org/data.rexometer.com/g' /home/pi/data/emonhub.con
 
 echo "RFM2PI"
 cd /home/pi/
