@@ -10,4 +10,7 @@ INSERT INTO `feeds` (`id`, `name`, `userid`, `tag`, `time`, `value`, `datatype`,
 (10, 'node:emonth5:humidity', 1, 'Node emonth5', NULL, NULL, 1, 0, NULL, 5, NULL),
 (11, 'node:emonth5:battery', 1, 'Node emonth5', NULL, NULL, 1, 0, NULL, 5, NULL),
 (12, 'node:emonth5:pulse', 1, 'Node emonth5', NULL, NULL, 1, 0, NULL, 5, NULL),
-(13, 'node:emonth5:pulsecount', 1, 'Node emonth5', NULL, NULL, 1, 0, NULL, 5, NULL);
+(13, 'node:emonth5:pulsecount', 1, 'Node emonth5', NULL, NULL, 1, 0, NULL, 5, NULL),
+(14, 'node:3phase:rssi', 1, 'Node 3phase', NULL, NULL, 1, 0, NULL, 5, NULL),
+(15, 'node:3phase:signal', 1, 'Node 3phase', NULL, NULL, 1, 0, NULL, 5, NULL),
+(16, 'node:emonth5:signal', 1, 'Node emonth5', NULL, NULL, 1, 0, NULL, 5, NULL);
