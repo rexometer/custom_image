@@ -50,7 +50,7 @@ sudo chmod ugo+w /home/pi/data/emonhub.conf
 echo "${bold}Optional: Enter emoncms API-Key for sending to remote server${normal}"
 read APIKEY
 sed -i -e "s/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx/$APIKEY/g" /home/pi/data/emonhub.conf
-sed -i -e 's/emoncms.org/data.rexometer.com/g' /home/pi/data/emonhub.con
+sed -i -e 's/emoncms.org/data.rexometer.com/g' /home/pi/data/emonhub.conf
 
 echo "RFM2PI"
 cd /home/pi/
