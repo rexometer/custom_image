@@ -82,6 +82,22 @@ cd $parent_path/feeds/phpfina
 sudo cp * /home/pi/data/phpfina/
 sudo chown -R www-data:www-data /home/pi/data/phpfina/
 
+echo "${bold}Optional: Enter Nodename for emonTH (for example emonth6, press enter for default (emonth5))${normal}"
+read NODENAMETH
+# default name
+NODENAMETH=${NODENAMETH:=emonth5}
+# search and replace
+sed -i -e "s/emonth5/$NODENAMETH/g" input.txt
+sed -i -e "s/emonth5/$NODENAMETH/g" feeds.txt
+
+echo "${bold}Optional: Enter Nodename for emonTX (for example 3phase1, press enter for default (3phase))${normal}"
+read NODENAMETX
+# default name
+NODENAMETX=${NODENAMETX:=3phase}
+# search and replace
+sed -i -e "s/3phase/$NODENAMETX/g" input.txt
+sed -i -e "s/3phase/$NODENAMETX/g" feeds.txt
+
 DB_USER="emoncms"
 DB_PASSWD="emonpiemoncmsmysql2016"
 DB_NAME="emoncms"
