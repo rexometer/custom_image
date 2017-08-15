@@ -46,6 +46,10 @@ sudo cp /home/pi/emonhub/conf/emonpi.default.emonhub.conf /home/pi/data/emonhub.
 sudo chown pi:www-data /home/pi/data/emonhub.conf
 sudo chmod ugo+w /home/pi/data/emonhub.conf
 
+# make socket for usb serial adapter consistant
+echo '#Assign fixed symlink to USB-serial adapter' | sudo tee /etc/udev/rules.d/75-CP2102.rules
+echo 'SUBSYSTEM=="tty", ENV{ID_SERIAL}=="Silicon_Labs_CP2102_USB_to_UART_Bridge_Controller_0001",SYMLINK+="ttyREXOMETER"'  | sudo tee -a /etc/udev/rules.d/75-CP2102.rules
+
 # Add APIKEY of emoncms remote server
 echo "${bold}Optional: Enter emoncms API-Key for sending to remote server${normal}"
 read APIKEY
