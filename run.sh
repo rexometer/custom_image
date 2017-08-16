@@ -94,7 +94,7 @@ NODENAMETH=${NODENAMETH:=emonth5}
 sed -i -e "s/emonth5/$NODENAMETH/g" input.txt
 sed -i -e "s/emonth5/$NODENAMETH/g" feeds.txt
 
-echo "${bold}Optional: Enter Nodename for emonTX (for example 3phase1, press enter for default (3phase))${normal}"
+echo "${bold}Optional: Enter Nodename for emonTX (for example 3phase2 for NodeID 12 or 3phase3 for NodeID 13, press enter for default (3phase = NodeID 11))${normal}"
 read NODENAMETX
 # default name
 NODENAMETX=${NODENAMETX:=3phase}
