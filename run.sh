@@ -129,3 +129,14 @@ sudo sed -i -e 's/emonpi/rexometer/g' /etc/hostname
 
 #remove updatelog
 sudo rm /home/pi/data/emonpiupdate.log
+
+#ask for remote access installation
+read -p "Add remote access via reverse SSH (y/n)? " answer
+case ${answer:0:1} in
+    y|Y )
+        git clone https://github.com/rexometer/remote_access.git && cd remote_access && sudo chmod +x autossh.sh && ./autossh.sh
+    ;;
+    * )
+        echo No
+    ;;
+esac
