@@ -135,6 +135,7 @@ echo 'min-memory = 1'  | sudo tee -a /etc/watchdog.conf
 echo 'watchdog-device = /dev/watchdog'  | sudo tee -a /etc/watchdog.conf
 echo 'watchdog-timeout = 15'  | sudo tee -a /etc/watchdog.conf
 
+sudo systemctl daemon-reload
 sudo systemctl enable watchdog
 sudo systemctl start watchdog
 
