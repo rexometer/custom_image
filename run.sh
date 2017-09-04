@@ -61,6 +61,9 @@ cd /home/pi/
 sudo rm -R RFM2Pi
 git clone https://github.com/rexometer/RFM2Pi.git
 
+echo "Update RFM2Pi fimrware (use LowPowerLab)"
+sh /home/pi/emonpi/rfm69piupdate.sh
+
 echo "app"
 cd /var/www/emoncms/Modules/
 sudo rm -R app
