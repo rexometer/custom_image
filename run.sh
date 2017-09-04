@@ -125,6 +125,19 @@ php /home/pi/emonpi/emoncmsdbupdate.php
 echo "Start emonhub"
 sudo /etc/init.d/emonhub start
 
+# Configure and activate watchdog
+sudo apt-get install watchdog
+sudo cp /lib/systemd/system/watchdog.service /etc/systemd/system/
+echo 'WantedBy=multi-user.target'  | sudo tee -a /etc/systemd/system/watchdog.service
+
+echo 'max-load-1 = 24'  | sudo tee -a /etc/watchdog.conf
+echo 'min-memory = 1'  | sudo tee -a /etc/watchdog.conf
+echo 'watchdog-device = /dev/watchdog'  | sudo tee -a /etc/watchdog.conf
+echo 'watchdog-timeout = 15'  | sudo tee -a /etc/watchdog.conf
+
+sudo systemctl enable watchdog
+sudo systemctl start watchdog
+
 #change hostname if branding is desired
 sudo sed -i -e 's/emonpi/rexometer/g' /etc/hosts
 sudo sed -i -e 's/emonpi/rexometer/g' /etc/hostname
