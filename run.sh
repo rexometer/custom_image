@@ -61,6 +61,9 @@ cd /home/pi/
 sudo rm -R RFM2Pi
 git clone https://github.com/rexometer/RFM2Pi.git
 
+echo "Update RFM2Pi fimrware (use LowPowerLab)"
+sh /home/pi/emonpi/rfm69piupdate.sh
+
 echo "app"
 cd /var/www/emoncms/Modules/
 sudo rm -R app
@@ -82,8 +85,7 @@ sudo cp default.emonpi.settings.php settings.php
 #sed -i -e 's/theme = "basic"/theme = "rexometer"/g' /var/www/emoncms/settings.php
 
 echo "move Standard feed files to correct location"
-cd $parent_path/feeds/phpfina
-sudo cp * /home/pi/data/phpfina/
+sudo cp $parent_path/feeds/phpfina/* /home/pi/data/phpfina/
 sudo chown -R www-data:www-data /home/pi/data/phpfina/
 
 echo "${bold}Optional: Enter Nodename for emonTH (for example emonth6, press enter for default (emonth5))${normal}"
@@ -91,16 +93,16 @@ read NODENAMETH
 # default name
 NODENAMETH=${NODENAMETH:=emonth5}
 # search and replace
-sed -i -e "s/emonth5/$NODENAMETH/g" input.txt
-sed -i -e "s/emonth5/$NODENAMETH/g" feeds.txt
+sed -i -e "s/emonth5/$NODENAMETH/g" $parent_path/input.txt
+sed -i -e "s/emonth5/$NODENAMETH/g" $parent_path/feeds.txt
 
 echo "${bold}Optional: Enter Nodename for emonTX (for example 3phase2 for NodeID 12 or 3phase3 for NodeID 13, press enter for default (3phase = NodeID 11))${normal}"
 read NODENAMETX
 # default name
 NODENAMETX=${NODENAMETX:=3phase}
 # search and replace
-sed -i -e "s/3phase/$NODENAMETX/g" input.txt
-sed -i -e "s/3phase/$NODENAMETX/g" feeds.txt
+sed -i -e "s/3phase/$NODENAMETX/g" $parent_path/input.txt
+sed -i -e "s/3phase/$NODENAMETX/g" $parent_path/feeds.txt
 
 DB_USER="emoncms"
 DB_PASSWD="emonpiemoncmsmysql2016"
@@ -126,9 +128,6 @@ sudo /etc/init.d/emonhub start
 #change hostname if branding is desired
 sudo sed -i -e 's/emonpi/rexometer/g' /etc/hosts
 sudo sed -i -e 's/emonpi/rexometer/g' /etc/hostname
-
-echo "Update RFM2Pi fimrware (use LowPowerLab)"
-sh /home/pi/emonpi/rfm69piupdate.sh
 
 #remove updatelog
 sudo rm /home/pi/data/emonpiupdate.log
