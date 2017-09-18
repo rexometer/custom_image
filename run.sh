@@ -61,8 +61,16 @@ cd /home/pi/
 sudo rm -R RFM2Pi
 git clone https://github.com/rexometer/RFM2Pi.git
 
-echo "Update RFM2Pi fimrware (use LowPowerLab)"
-sh /home/pi/emonpi/rfm69piupdate.sh
+read -p "Flash LowPowerLab to rfm2pi (y/n)? " answer
+case ${answer:0:1} in
+    y|Y )
+        echo "Update RFM2Pi firmware (use LowPowerLab)"
+        sh /home/pi/emonpi/rfm69piupdate.sh
+    ;;
+    * )
+        echo No
+    ;;
+esac
 
 echo "app"
 cd /var/www/emoncms/Modules/
