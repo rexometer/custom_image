@@ -65,6 +65,8 @@ read -p "Flash LowPowerLab to rfm2pi (y/n)? " answer
 case ${answer:0:1} in
     y|Y )
         echo "Update RFM2Pi firmware (use LowPowerLab)"
+        sed -i -e "s/openenergymonitor/rexometer/g" /home/pi/emonpi/rfm69piupdate.sh
+        sed -i -e "s/RFM2Pi/receiver_LPL/g" /home/pi/emonpi/rfm69piupdate.sh
         sh /home/pi/emonpi/rfm69piupdate.sh
     ;;
     * )
