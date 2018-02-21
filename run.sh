@@ -29,22 +29,38 @@ ln -s /home/pi/Modules/settings /var/www/emoncms/Modules/settings
 git clone https://github.com/rexometer/home.git
 ln -s /home/pi/Modules/home /var/www/emoncms/Modules/home
 
-echo "Change GIT URLs"
-echo "emonpi"
-cd /home/pi/
-sudo rm -R emonpi/
-git clone https://github.com/rexometer/emonpi.git
+read -p "Use custom RExometer EMONPI version (y/n)? " answer
+case ${answer:0:1} in
+    y|Y )
+       echo "Change GIT URLs"
+	echo "emonpi"
+	cd /home/pi/
+	sudo rm -R emonpi/
+	git clone https://github.com/rexometer/emonpi.git
+    ;;
+    * )
+        echo No
+    ;;
+esac
 
-echo "emonhub"
-cd /home/pi/
-sudo rm -R emonhub/
-git clone https://github.com/rexometer/emonhub.git
+read -p "Use custom RExometer EMONHUB version (y/n)? " answer
+case ${answer:0:1} in
+    y|Y )
+	echo "emonhub"
+	cd /home/pi/
+	sudo rm -R emonhub/
+	git clone https://github.com/rexometer/emonhub.git
 
-# Copy Standard-Template
-sudo rm /home/pi/data/emonhub.conf
-sudo cp /home/pi/emonhub/conf/emonpi.default.emonhub.conf /home/pi/data/emonhub.conf
-sudo chown pi:www-data /home/pi/data/emonhub.conf
-sudo chmod ugo+w /home/pi/data/emonhub.conf
+	# Copy Standard-Template
+	sudo rm /home/pi/data/emonhub.conf
+	sudo cp /home/pi/emonhub/conf/emonpi.default.emonhub.conf /home/pi/data/emonhub.conf
+	sudo chown pi:www-data /home/pi/data/emonhub.conf
+	sudo chmod ugo+w /home/pi/data/emonhub.conf
+    ;;
+    * )
+        echo No
+    ;;
+esac
 
 # make socket for usb serial adapter consistant
 echo '#Assign fixed symlink to USB-serial adapter' | sudo tee /etc/udev/rules.d/75-CP2102.rules
@@ -74,29 +90,43 @@ case ${answer:0:1} in
     ;;
 esac
 
-echo "app"
-cd /var/www/emoncms/Modules/
-sudo rm -R app
-git clone https://github.com/rexometer/app.git
+read -p "Use custom RExometer APP version (y/n)? " answer
+case ${answer:0:1} in
+    y|Y )
+	echo "app"
+	cd /var/www/emoncms/Modules/
+	sudo rm -R app
+	git clone https://github.com/rexometer/app.git
+    ;;
+    * )
+        echo No
+    ;;
+esac
 
-echo "emoncms"
+read -p "Use custom RExometer EMONCMS version (y/n)? " answer
+case ${answer:0:1} in
+    y|Y )
+	echo "emoncms"
+	cd /var/www/emoncms
+	# git error handling
+	git config --local user.email "root@emonpi.local"
+	git config --local user.name "emonpi"
+	git remote set-url origin https://github.com/rexometer/emoncms.git
+	git pull
+    echo "copy new settigs"
+    sudo cp default.emonpi.settings.php settings.php
+    ;;
+    * )
+        echo No
+    ;;
+esac
 
-cd /var/www/emoncms
-# git error handling
-git config --local user.email "root@emonpi.local"
-git config --local user.name "emonpi"
-git remote set-url origin https://github.com/rexometer/emoncms.git
-git pull
+echo "change Theme"
+sed -i -e 's/theme = "basic"/theme = "rexometer"/g' /var/www/emoncms/settings.php
 
-echo "copy new settigs"
-sudo cp default.emonpi.settings.php settings.php
-
-#echo "change Theme"
-#sed -i -e 's/theme = "basic"/theme = "rexometer"/g' /var/www/emoncms/settings.php
-
-echo "move Standard feed files to correct location"
-sudo cp $parent_path/feeds/phpfina/* /home/pi/data/phpfina/
-sudo chown -R www-data:www-data /home/pi/data/phpfina/
+#echo "move Standard feed files to correct location"
+#sudo cp $parent_path/feeds/phpfina/* /home/pi/data/phpfina/
+#sudo chown -R www-data:www-data /home/pi/data/phpfina/
 
 echo "${bold}Optional: Enter Nodename for emonTH (for example emonth6, press enter for default (emonth5))${normal}"
 read NODENAMETH
