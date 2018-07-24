@@ -29,11 +29,6 @@ ln -s /home/pi/Modules/settings /var/www/emoncms/Modules/settings
 git clone https://github.com/rexometer/home.git
 ln -s /home/pi/Modules/home /var/www/emoncms/Modules/home
 
-# Install Rexometer Theme
-cd /var/www/emoncms/Theme
-git clone https://github.com/rexometer/rexometer.git
-cd
-
 read -p "Use custom RExometer EMONPI version (y/n)? " answer
 case ${answer:0:1} in
     y|Y )
@@ -134,8 +129,12 @@ case ${answer:0:1} in
     ;;
 esac
 
+# Install Rexometer Theme
 echo "change Theme"
 sed -i -e 's/theme = "basic"/theme = "rexometer"/g' /var/www/emoncms/settings.php
+cd /var/www/emoncms/Theme
+git clone https://github.com/rexometer/rexometer.git
+cd
 
 #echo "move Standard feed files to correct location"
 #sudo cp $parent_path/feeds/phpfina/* /home/pi/data/phpfina/
