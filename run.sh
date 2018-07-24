@@ -72,10 +72,18 @@ read APIKEY
 sed -i -e "s/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx/$APIKEY/g" /home/pi/data/emonhub.conf
 sed -i -e 's/emoncms.org/data.rexometer.com/g' /home/pi/data/emonhub.conf
 
-echo "RFM2PI"
-cd /home/pi/
-sudo rm -R RFM2Pi
-git clone https://github.com/rexometer/RFM2Pi.git
+read -p "Use custom RExometer RFM2Pi version (y/n)? " answer
+case ${answer:0:1} in
+    y|Y )
+	echo "RFM2PI"
+	cd /home/pi/
+	sudo rm -R RFM2Pi
+	git clone https://github.com/rexometer/RFM2Pi.git
+    ;;
+    * )
+        echo No
+    ;;
+esac
 
 read -p "Flash LowPowerLab to rfm2pi (y/n)? " answer
 case ${answer:0:1} in
