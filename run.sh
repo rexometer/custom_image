@@ -29,6 +29,11 @@ ln -s /home/pi/Modules/settings /var/www/emoncms/Modules/settings
 git clone https://github.com/rexometer/home.git
 ln -s /home/pi/Modules/home /var/www/emoncms/Modules/home
 
+# Install Rexometer Theme
+cd /var/www/emoncms/Theme
+git clone https://github.com/rexometer/rexometer.git
+cd
+
 read -p "Use custom RExometer EMONPI version (y/n)? " answer
 case ${answer:0:1} in
     y|Y )
